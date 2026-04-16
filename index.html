@@ -469,13 +469,17 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:40px 6
     </div>
     <div class="careers-right">
       <div class="eyebrow" style="margin-bottom:24px">Apply Now</div>
-      <form id="careerForm" onsubmit="submitCareer(event)">
-        <div class="form-row"><div class="field"><label>First Name</label><input type="text" id="cf-first" placeholder="Jane" required></div><div class="field"><label>Last Name</label><input type="text" id="cf-last" placeholder="Smith" required></div></div>
-        <div class="field"><label>Email</label><input type="email" id="cf-email" placeholder="jane@email.com" required></div>
-        <div class="field"><label>Phone</label><input type="tel" id="cf-phone" placeholder="(843) 555-0100"></div>
-        <div class="field"><label>Position</label><select id="cf-role"><option value="">Select a position...</option><option>General Interest</option></select></div>
-        <div class="field"><label>Tell us about yourself</label><textarea id="cf-msg" placeholder="Share your experience and why you're interested..." required></textarea></div>
-        <div class="field"><label>Resume</label><div class="file-zone"><input type="file" accept=".pdf,.doc,.docx" onchange="setFile(event)"><div class="file-zone-label"><strong>Click to upload</strong> or drag and drop — PDF, DOC, DOCX</div><div class="file-chosen" id="fname"></div></div></div>
+      <form id="careerForm" action="https://formsubmit.co/braxton@palmedough.com" method="POST" onsubmit="showCareerThanks()">
+        <input type="hidden" name="_subject" value="Palmedough.com: Career Application">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://palmedough.com/#careers-sent">
+        <input type="hidden" name="_template" value="table">
+        <div class="form-row"><div class="field"><label>First Name</label><input type="text" name="First Name" id="cf-first" placeholder="Jane" required></div><div class="field"><label>Last Name</label><input type="text" name="Last Name" id="cf-last" placeholder="Smith" required></div></div>
+        <div class="field"><label>Email</label><input type="email" name="Email" id="cf-email" placeholder="jane@email.com" required></div>
+        <div class="field"><label>Phone</label><input type="tel" name="Phone" id="cf-phone" placeholder="(843) 555-0100"></div>
+        <div class="field"><label>Position</label><select name="Position" id="cf-role"><option value="">Select a position...</option><option>General Interest</option></select></div>
+        <div class="field"><label>Tell us about yourself</label><textarea name="Message" id="cf-msg" placeholder="Share your experience and why you're interested..." required></textarea></div>
+        <div class="field"><label>Resume</label><div class="file-zone"><input type="file" name="attachment" accept=".pdf,.doc,.docx" onchange="setFile(event)"><div class="file-zone-label"><strong>Click to upload</strong> or drag and drop — PDF, DOC, DOCX</div><div class="file-chosen" id="fname"></div></div></div>
         <button type="submit" class="submit-btn">Submit Application</button>
       </form>
       <div class="form-thanks" id="career-thanks"><p><strong>Application received.</strong> We review every submission and will be in touch if there's a fit.</p></div>
@@ -500,11 +504,15 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:40px 6
     </div>
     <div class="contact-right">
       <div class="eyebrow" style="margin-bottom:24px">Send a Message</div>
-      <form id="contactForm" onsubmit="submitContact(event)">
-        <div class="form-row"><div class="field"><label>First Name</label><input type="text" id="con-first" placeholder="Jane" required></div><div class="field"><label>Last Name</label><input type="text" id="con-last" placeholder="Smith" required></div></div>
-        <div class="field"><label>Email</label><input type="email" id="con-email" placeholder="jane@email.com" required></div>
-        <div class="field"><label>Subject</label><select id="con-sub"><option value="">Select a topic...</option><option>General Inquiry</option><option>Catering & Events</option><option>Franchise / Business</option><option>Media & Press</option><option>Careers</option><option>Other</option></select></div>
-        <div class="field"><label>Message</label><textarea id="con-msg" placeholder="What's on your mind?" required style="min-height:140px"></textarea></div>
+      <form id="contactForm" action="https://formsubmit.co/braxton@palmedough.com" method="POST" onsubmit="showContactThanks()">
+        <input type="hidden" name="_subject" value="Palmedough.com: New Contact Inquiry">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://palmedough.com/#contact-sent">
+        <input type="hidden" name="_template" value="table">
+        <div class="form-row"><div class="field"><label>First Name</label><input type="text" name="First Name" id="con-first" placeholder="Jane" required></div><div class="field"><label>Last Name</label><input type="text" name="Last Name" id="con-last" placeholder="Smith" required></div></div>
+        <div class="field"><label>Email</label><input type="email" name="Email" id="con-email" placeholder="jane@email.com" required></div>
+        <div class="field"><label>Subject</label><select name="Subject" id="con-sub"><option value="">Select a topic...</option><option>General Inquiry</option><option>Catering & Events</option><option>Franchise / Business</option><option>Media & Press</option><option>Careers</option><option>Other</option></select></div>
+        <div class="field"><label>Message</label><textarea name="Message" id="con-msg" placeholder="What's on your mind?" required style="min-height:140px"></textarea></div>
         <button type="submit" class="submit-btn">Send Message</button>
       </form>
       <div class="form-thanks" id="contact-thanks"><p><strong>Message sent.</strong> We'll get back to you at the email you provided.</p></div>
@@ -522,8 +530,8 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:40px 6
 function show(id){document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));const s=document.getElementById(id);if(s){s.classList.add('active');window.scrollTo(0,0)}}
 function fillRole(role){show('careers');setTimeout(()=>{const sel=document.getElementById('cf-role');if(sel&&role)sel.value=role;const el=document.querySelector('.careers-right');if(el)el.scrollIntoView({behavior:'smooth'});},100);}
 function setFile(e){const f=e.target.files[0];const d=document.getElementById('fname');if(f&&d)d.textContent=f.name;}
-function submitCareer(e){e.preventDefault();const first=document.getElementById('cf-first').value;const last=document.getElementById('cf-last').value;const email=document.getElementById('cf-email').value;const phone=document.getElementById('cf-phone').value;const role=document.getElementById('cf-role').value;const msg=document.getElementById('cf-msg').value;const sub=encodeURIComponent('Career Application: '+(role||'General Interest')+' — '+first+' '+last);const body=encodeURIComponent('Name: '+first+' '+last+'\nEmail: '+email+'\nPhone: '+phone+'\nPosition: '+role+'\n\n'+msg+'\n\n[Resume attached separately]');window.location.href='mailto:braxton@palmedough.com?subject='+sub+'&body='+body;document.getElementById('career-thanks').classList.add('show');document.getElementById('careerForm').reset();document.getElementById('fname').textContent='';}
-function submitContact(e){e.preventDefault();const first=document.getElementById('con-first').value;const last=document.getElementById('con-last').value;const email=document.getElementById('con-email').value;const sub=document.getElementById('con-sub').value;const msg=document.getElementById('con-msg').value;const subject=encodeURIComponent('Palmedough.com: '+(sub||'Inquiry')+' — '+first+' '+last);const body=encodeURIComponent('From: '+first+' '+last+'\nEmail: '+email+'\n\n'+msg);window.location.href='mailto:braxton@palmedough.com?subject='+subject+'&body='+body;document.getElementById('contact-thanks').classList.add('show');document.getElementById('contactForm').reset();}
+function showCareerThanks(){document.getElementById('career-thanks').classList.add('show');}
+function showContactThanks(){document.getElementById('contact-thanks').classList.add('show');}
 </script>
 </body>
 </html>
